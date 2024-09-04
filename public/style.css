@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #c1561c;
+    text-align: center;
+    margin-top: 20px;
+}
+
+h2 {
+    color: #c1561c;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.clothing-gallery, .shoes-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.clothing-gallery {
+    border: 1px solid #333333;
+}
+
+.shoes-gallery {
+    border: 1px solid #3e3e3e;
+}
+
+.clothing-item, .shoes-item {
+    border: 1px solid #ff9500;
+    border-radius: 8px;
+    overflow: hidden;
+    background: burlywood;
+    text-align: center;
+    width: 200px;
+    transition: transform 0.3s ease;
+    padding: 10px;
+}
+
+.clothing-item img, .shoes-item img {
+    width: 100%;
+    height: auto;
+}
+
+.clothing-item p, .shoes-item p {
+    margin: 10px 0;
+    color: #333;
+}
+
+.clothing-item:hover, .shoes-item:hover {
+    transform: scale(1.05);
+}
+
+/* New styles for like and comment buttons */
+.like-btn, .add-comment-btn {
+    background-color: #5f6060;
+    color: rgb(255, 174, 0);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.like-btn:hover, .add-comment-btn:hover {
+    background-color: #ff0404;
+}
+
+.likes-count {
+    display: block;
+    margin-top: 5px;
+    color: #555;
+}
+
+/* Comments section styles */
+.comments-section {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.comments-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comments-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.comment-input {
+    width: calc(100% - 22px); /* Adjust width to account for padding and border */
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+    .clothing-item, .shoes-item {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .clothing-item, .shoes-item {
+        width: 100px;
+    }
+}

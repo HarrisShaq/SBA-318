@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Collection</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Fashion Collection</h1>
+
+    <h2>Clothing</h2>
+    <div class="clothing-gallery">
+        <% clothing.forEach(item => { %>
+            <div class="clothing-item" data-id="<%= item.id %>">
+                <a href="/fashion/clothing/<%= item.id %>">
+                    <img src="<%= item.imageUrl %>" alt="<%= item.item %>">
+                    <p><%= item.brand %> - <%= item.item %></p>
+                </a>
+                <button class="like-btn">Like</button>
+                <span class="likes-count"><%= item.likes || 0 %> likes</span>
+                <div class="comments-section">
+                    <ul class="comments-list">
+                        <% (item.comments || []).forEach(comment => { %>
+                            <li><%= comment %></li>
+                        <% }); %>
+                    </ul>
+                    <input type="text" class="comment-input" placeholder="Add a comment">
+                    <button class="add-comment-btn">Add Comment</button>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+    <h2>Shoes</h2>
+    <div class="shoes-gallery">
+        <% shoes.forEach(shoe => { %>
+            <div class="shoes-item" data-id="<%= shoe.id %>">
+                <a href="/fashion/shoes/<%= shoe.id %>">
+                    <img src="<%= shoe.imageUrl %>" alt="<%= shoe.name %>">
+                    <p><%= shoe.brand %> - <%= shoe.name %></p>
+                </a>
+                <button class="like-btn">Like</button>
+                <span class="likes-count"><%= shoe.likes || 0 %> likes</span>
+                <div class="comments-section">
+                    <ul class="comments-list">
+                        <% (shoe.comments || []).forEach(comment => { %>
+                            <li><%= comment %></li>
+                        <% }); %>
+                    </ul>
+                    <input type="text" class="comment-input" placeholder="Add a comment">
+                    <button class="add-comment-btn">Add Comment</button>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Handle likes for clothing items
+            document.querySelectorAll('.clothing-item .like-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const itemId = btn.closest('.clothing-item').dataset.id;
+                    fetch(`/fashion/clothing/${itemId}/like`, { method: 'POST' })
+                        .then(response => response.json())
+                        .then(data => {
+                            btn.nextElementSibling.textContent = `${data.likes} likes`;
+                        });
+                });
+            });
+
+            // Handle comments for clothing items
+            document.querySelectorAll('.clothing-item .add-comment-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const itemId = btn.closest('.clothing-item').dataset.id;
+                    const commentInput = btn.previousElementSibling;
+                    const comment = commentInput.value;
+                    fetch(`/fashion/clothing/${itemId}/comments`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ comment })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            const commentsList = btn.previousElementSibling.previousElementSibling;
+                            const li = document.createElement('li');
+                            li.textContent = comment;
+                            commentsList.appendChild(li);
+                            commentInput.value = '';
+                        });
+                });
+            });
+
+            // Handle likes for shoes items
+            document.querySelectorAll('.shoes-item .like-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const itemId = btn.closest('.shoes-item').dataset.id;
+                    fetch(`/fashion/shoes/${itemId}/like`, { method: 'POST' })
+                        .then(response => response.json())
+                        .then(data => {
+                            btn.nextElementSibling.textContent = `${data.likes} likes`;
+                        });
+                });
+            });
+
+            // Handle comments for shoes items
+            document.querySelectorAll('.shoes-item .add-comment-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const itemId = btn.closest('.shoes-item').dataset.id;
+                    const commentInput = btn.previousElementSibling;
+                    const comment = commentInput.value;
+                    fetch(`/fashion/shoes/${itemId}/comments`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ comment })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            const commentsList = btn.previousElementSibling.previousElementSibling;
+                            const li = document.createElement('li');
+                            li.textContent = comment;
+                            commentsList.appendChild(li);
+                            commentInput.value = '';
+                        });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

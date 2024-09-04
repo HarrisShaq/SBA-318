@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= item.brand %> - <%= item.item %></title>
+    <link rel="stylesheet" href="/style.css"> 
+</head>
+<body>
+    <h1><%= item.brand %> - <%= item.item %></h1>
+    <img src="<%= item.imageUrl %>" alt="<%= item.item %>">
+    <p>Brand: <%= item.brand %></p>
+    <p>Item: <%= item.item %></p>
+    <a href="/home">Back to Homepage</a>
+</body>
+</html>
